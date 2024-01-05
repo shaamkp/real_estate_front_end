@@ -62,25 +62,28 @@ const HomeSingle = () => {
                       <UnitType>{item.unit_type}Bhk</UnitType>
                       <UnitType>{item.rent}rs</UnitType>
                     </UnitsDiv>
-                    <AssignedTenantDiv>
+                    <AssignedTenantDiv
+                      style={{
+                        display:
+                          item?.assigned_tenant?.length > 0 ? "block" : "none",
+                      }}
+                    >
                       <h3>Assigned Tenant Details</h3>
                       <AssignedTenantDivContent>
-                        {item?.assigned_tenant?.length > 0
-                          ? item?.assigned_tenant.map((tenant) => (
-                              <>
-                                <TenantDiv>
-                                  {tenant.name}
-                                  <br /> {tenant.phone}
-                                  <br /> {tenant.address}
-                                  <br />
-                                  {tenant.agreement_end_date}
-                                  <br />
-                                  {tenant.monthly_rent_date}
-                                  <br />
-                                </TenantDiv>
-                              </>
-                            ))
-                          : ""}
+                        {item?.assigned_tenant.map((tenant) => (
+                          <>
+                            <TenantDiv>
+                              {tenant.name}
+                              <br /> {tenant.phone}
+                              <br /> {tenant.address}
+                              <br />
+                              {tenant.agreement_end_date}
+                              <br />
+                              {tenant.monthly_rent_date}
+                              <br />
+                            </TenantDiv>
+                          </>
+                        ))}
                       </AssignedTenantDivContent>
                     </AssignedTenantDiv>
                   </UnitContentDiv>
@@ -134,7 +137,6 @@ const UnitDetail = styled.div`
 const AssignedTenantDiv = styled.div`
   width: 100%;
   padding: 5px;
-  overflow: scroll;
   height: 200px;
 `;
 const UnitContentDiv = styled.div`
@@ -154,6 +156,8 @@ const AssignedTenantDivContent = styled.div`
 `;
 const TenantDiv = styled.div`
   height: 200px;
+  overflow: scroll;
+
   width: 25.3%;
   color: #fff;
   background: black;
