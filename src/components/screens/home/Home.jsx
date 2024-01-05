@@ -11,11 +11,15 @@ const Home = () => {
   const userData = useBearStore((state) => state.userData);
   const [addPropertyModal, setPropertyModal] = useState(false);
   const [addTenantModal, setTenantModal] = useState(false);
+  const [search, setSerach] = useState("");
   const [propertyData, setPropertyData] = useState([]);
 
   const fetchPropertyData = () => {
     apiConfig
       .get("property/list-property/", {
+        params: {
+          q: search,
+        },
         headers: {
           Authorization: `Bearer ${userData.accessToken}`,
         },
@@ -30,7 +34,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPropertyData();
-  }, []);
+  }, [search]);
 
   return (
     <MainConatiner>
@@ -43,6 +47,13 @@ const Home = () => {
             Create Tenant
           </CreatePropertyButton>
           <CreatePropertyButton to="/tenant">Tenant</CreatePropertyButton>
+          <InputDiv>
+            <input
+              type="text"
+              placeholder="Serach here"
+              onChange={(e) => setSerach(e.target.value)}
+            />
+          </InputDiv>
         </ContentContainer>
         <MiddleContentContainer>
           <PropertyList propertyData={propertyData} />
@@ -108,4 +119,10 @@ const RouteButton = styled.div`
   align-items: center;
   padding: 10px;
   border-radius: 5px;
+`;
+const InputDiv = styled.div`
+  input {
+    width: 100%;
+    padding: 3%;
+  }
 `;
